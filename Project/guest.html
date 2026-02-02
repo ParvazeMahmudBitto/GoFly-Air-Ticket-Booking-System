@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GoFly - Guest</title>
+  <link rel="shortcut icon" href="Logo.png" type="image/x-icon">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet"/>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      display: flex;
+      height: 100vh;
+      background: linear-gradient(to right, #d7e1ec, #f5fafd);
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 260px;
+      background: #494d53;
+      color: white;
+      padding: 2rem 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .logo-section {
+      margin-bottom: 2rem;
+    }
+
+    .logo-img {
+      width: 120px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    .nav-button {
+      width: 100%;
+      background: transparent;
+      border: none;
+      color: white;
+      padding: 1rem;
+      margin: 0.5rem 0;
+      text-align: left;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: background 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .nav-button:hover,
+    .nav-button.active {
+      background: #2a5298;
+      border-radius: 10px;
+    }
+
+    /* Topbar */
+    .topbar {
+      width: 100%;
+      padding: 1rem 2rem;
+      background: #f7f9fc;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #1e3c72;
+    }
+
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .section {
+      padding: 2rem;
+      display: none;
+      animation: fadeIn 0.4s ease;
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    .card {
+      background: white;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+      max-width: 800px;
+      margin: auto;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    label {
+      display: block;
+      margin: 1rem 0 0.5rem;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      padding: 0.75rem;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      margin-bottom: 1rem;
+    }
+
+    .submit-btn {
+      background: #1e3c72;
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .submit-btn:hover {
+      background: #16335e;
+    }
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <div class="logo-section">
+      <img src="Logo.png" alt="AirBook Logo" class="logo-img">
+    </div>
+    <button class="nav-button active" onclick="showSection('search')">🔍 Search Flights</button>
+    <button class="nav-button" onclick="showSection('schedule')">📃 Flight Schedules</button>
+    <button class="nav-button" onclick="showSection('register')">📝 Register</button>
+    <button class="nav-button" onclick="showSection('login')">🔐 Login</button>
+    <button class="nav-button" onclick="showSection('offers')">📣 Offers & News</button>
+    <button class="nav-button" onclick="showSection('contact')">📩 Contact Support</button>
+  </div>
+
+  <div class="main-content">
+    <div class="topbar">✈️ GoFly-Air Ticket Booking (Guest Mode)</div>
+
+    <div id="search" class="section active">
+      <div class="card">
+        <h2>🔍 Search Flights</h2>
+        <label>From: <input type="text" placeholder="City A"></label>
+        <label>To: <input type="text" placeholder="City B"></label>
+        <label>Date: <input type="date"></label>
+        <button class="submit-btn">Search</button>
+      </div>
+    </div>
+
+    <div id="schedule" class="section">
+      <div class="card">
+        <h2>📃 View Flight Schedules</h2>
+        <p>🛫 10:00 AM - New York to London<br>🛫 2:30 PM - Paris to Dubai<br>🛫 6:45 PM - Tokyo to Sydney</p>
+      </div>
+    </div>
+
+    <div id="register" class="section">
+      <div class="card">
+        <h2>📝 Register</h2>
+        <label>Name: <input type="text"></label>
+        <label>Email: <input type="email"></label>
+        <label>Password: <input type="password"></label>
+        <button class="submit-btn">Register</button>
+      </div>
+    </div>
+
+    <div id="login" class="section">
+      <div class="card">
+        <h2>🔐 Login</h2>
+        <label>Email: <input type="email"></label>
+        <label>Password: <input type="password"></label>
+        <button class="submit-btn">Login</button>
+      </div>
+    </div>
+
+    <div id="offers" class="section">
+      <div class="card">
+        <h2>📣 Offers & News</h2>
+        <ul>
+          <li>🎉 Get 15% off on your first booking!</li>
+          <li>📆 Summer discount: 10% off on round-trips till June!</li>
+          <li>🆕 New routes added: Singapore, Istanbul, and Cape Town!</li>
+        </ul>
+      </div>
+    </div>
+
+    <div id="contact" class="section">
+      <div class="card">
+        <h2>📩 Contact Support</h2>
+        <label>Your Email: <input type="email"></label>
+        <label>Message: <textarea rows="4" placeholder="Write your query here..."></textarea></label>
+        <button class="submit-btn">Send Message</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function showSection(id) {
+      document.querySelectorAll('.section').forEach(section => section.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      document.querySelectorAll('.nav-button').forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GoFly</title>
+  <link rel="shortcut icon" href="Logo.png" type="image/x-icon">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- ✅ Animate.css -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+
+  <!-- ✅ AOS CSS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet" />
+
+  <style>
+    body {
+      background: linear-gradient(to right, #1b263b, #e0e1dd);
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+
+      /* To prevent header overlap */
+    }
+
+    .top-header {
+      position: relative;
+      top: 0;
+      width: 100%;
+      background: url("Screenshot_1.png") center/cover no-repeat, linear-gradient(to right, #003973, #e5e5be);
+      color: white;
+      z-index: 1000;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    .top-header h4 {
+      margin: 0;
+      padding: 10px 0 5px 0;
+      width: 20%;
+
+    }
+
+    marquee {
+      color: #fff3cd;
+      font-weight: 500;
+      padding: 6px 0;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 20px;
+      color: white;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      max-width: 300px;
+      margin: 0 auto;
+    }
+
+    .btn-custom {
+      padding: 12px 24px;
+      background: transparent;
+      color: #00eeff;
+      border: 2px solid #00eeff;
+      border-radius: 5px;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+      box-shadow: 0 0 5px #00eeff, 0 0 10px #00eeff;
+      transition: all 0.3s ease;
+    }
+
+    .btn-custom:hover {
+      background: aqua;
+      color: #000;
+      box-shadow: 0 0 10px aqua, 0 0 20px aqua, 0 0 40px aqua;
+    }
+
+    .header-text {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #fff;
+      margin-bottom: 30px;
+    }
+
+    .role-card:hover {
+      transform: translateY(-15px);
+      transition: transform 0.3s ease;
+    }
+
+    .destination-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 1rem;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .destination-card:hover {
+      transform: translateY(-15px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    .destination-section .row {
+      --bs-gutter-x: 0.8rem;
+    }
+
+    .destination-card img {
+      height: 260px;
+      /* Increased from 220px */
+      object-fit: cover;
+      width: 100%;
+      transition: transform 0.3s ease;
+    }
+
+    .destination-card:hover img {
+      transform: scale(1.05);
+    }
+
+    .flight-btn {
+      background: transparent;
+      color: #00eeff;
+      border: 2px solid #00eeff;
+      border-radius: 5px;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+      box-shadow: 0 0 5px #00eeff, 0 0 10px #00eeff;
+      transition: all 0.3s ease;
+    }
+
+    .flight-btn:hover {
+      background: green;
+      color: #000;
+      box-shadow: 0 0 10px #00eeff, 0 0 20px #00eeff, 0 0 40px #00eeff;
+    }
+
+    .destination-overlay {
+      position: relative;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(0, 0, 0, 0.65);
+      color: white;
+      padding: 15px;
+      text-align: center;
+    }
+
+    .destination-overlay h5 {
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    .destination-overlay p {
+      margin: 5px 0;
+    }
+
+    .destination-section {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      padding: 40px 20px;
+      margin-top: 50px;
+      border-radius: 1rem;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .destination-card {
+      height: 100%;
+      background: rgba(30, 30, 46, 0.7);
+      
+      margin: 0 auto;
+      /* Ensures all cards in a row match height */
+    }
+
+    .destination-section h3 {
+      text-align: center;
+      color: #ffffff;
+      margin-bottom: 30px;
+      font-size: 20px;
+      font-weight: bold;
+      overflow: hidden;
+      white-space: nowrap;
+      border-right: 3px solid #3498db;
+      animation: typing 3s steps(2) infinite, blink 0.5s step-end infinite alternate;
+    }
+
+    @keyframes typing {
+      0% {
+        width: 0;
+      }
+
+      50% {
+        width: 100%;
+      }
+
+      100% {
+        width: 0;
+      }
+    }
+
+    @keyframes blink {
+      50% {
+        border-color: transparent;
+      }
+    }
+
+    .btn-light {
+      font-weight: bold;
+      padding: 6px 16px;
+      border-radius: 30px;
+      font-size: 0.9rem;
+    }
+
+    .faq-section {
+      background: #f8f9fa;
+      border-radius: 10px;
+      padding: 40px 30px;
+      margin-top: 50px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .faq-section h3 {
+      color: #1e3a8a;
+      font-weight: bold;
+    }
+
+    .accordion-button::after {
+      font-family: "Font Awesome 6 Free";
+      content: "\f107";
+      font-weight: 900;
+      color: #1e3a8a;
+      transform: rotate(0deg);
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .accordion-button:not(.collapsed)::after {
+      transform: rotate(180deg);
+    }
+
+    .accordion-button i {
+      margin-right: 10px;
+      color: #0d6efd;
+    }
+
+    .accordion-body {
+      background-color: #fff;
+      border-left: 4px solid #0d6efd;
+      padding: 15px 20px;
+      border-radius: 5px;
+    }
+
+    .gradient-bg {
+      background: linear-gradient(-45deg, #0f2027, #203a43, #2c5364,aqua);
+
+
+
+
+      background-size: 400% 400%;
+      animation: gradientAnim 15s ease infinite;
+    }
+
+    @keyframes gradientAnim {
+      0% {
+        background-position: 0% 50%;
+      }
+
+      50% {
+        background-position: 100% 50%;
+      }
+
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    .carousel-inner img {
+      height: 300px;
+      object-fit: cover;
+    }
+
+    .carousel-caption {
+      font-size: 0.95rem;
+    }
+
+    .support-section {
+
+      background: linear-gradient(-45deg, #0f2027, #203a43, #2c5364, #1e3c72);
+      padding: 60px 30px;
+      border-radius: 15px;
+      margin-top: 60px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+      color: orange
+    }
+
+    .support-heading {
+      color: aquamarine;
+      font-weight: bold;
+      margin-bottom: 40px;
+      font-size: 28px;
+    }
+
+    .support-card {
+      background: white;
+      border: none;
+      border-left: 5px solid #0d6efd;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+      padding: 20px;
+      margin-bottom: 25px;
+      transition: transform 1.3s;
+
+    }
+
+    .support-card:hover {
+      transform: scale(2.03);
+
+    }
+
+    .support-card i {
+      font-size: 28px;
+      color: white;
+      background: #0d6efd;
+      border-radius: 50%;
+      padding: 12px;
+      margin-right: 18px;
+    }
+
+    .form-control {
+      border-radius: 8px;
+      padding: 12px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+    }
+
+    .form-control:focus {
+      border-color: #0d6efd;
+      box-shadow: 0 0 0 4px rgba(13, 110, 253, 0.15);
+    }
+
+    .btn-primary {
+      background: linear-gradient(45deg, #0d6efd, #3b82f6);
+      border: none;
+      padding: 10px 30px;
+      font-weight: 500;
+      border-radius: 8px;
+      transition: background 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(45deg, red, #2563eb);
+    }
+
+    .map-container {
+      height: 200px;
+      margin-top: 40px;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Chatbot Button */
+    .chatbot-bubble {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #0d6efd;
+      color: white;
+      border-radius: 50%;
+      padding: 15px 17px;
+      font-size: 20px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      z-index: 999;
+      transition: transform 0.3s ease;
+    }
+
+    .chatbot-bubble:hover {
+      transform: scale(1.1);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Fixed Top Header with Marquee -->
+  <div class="top-header">
+    <h4><img src="Logo.png" alt="" style="height: 210px; max-height: 210px;"></h4>
+    <marquee behavior="scroll" direction="left">
+      📢 Latest Update: Special discounts on Paris, Maldives, Tokyo & Switzerland flights! | Flat 20% discount on
+      international round-trip tickets! | 🕒 Book early to get the best prices! |
+      ☎️ Contact support at +123-456-7890 for assistance.
+    </marquee>
+  </div>
+
+  <!-- Main Content -->
+  <div class="container text-center">
+    <div class="header-text">Welcome to GoFly-Air Ticket Booking System</div>
+    <div class="row justify-content-center g-4">
+      <!-- Admin -->
+      <div class="col-md-4">
+        <div class="card p-4 role-card">
+          <h4 class="mb-3">Admin</h4>
+          <p>Manage Flights, Bookings and Users</p>
+          <a href="adminlogin.html" target=_blank class="btn btn-custom">Admin Login</a>
+        </div>
+      </div>
+
+      <!-- Registered User -->
+      <div class="col-md-4">
+        <div class="card p-4 role-card">
+          <h4 class="mb-3">Registered User</h4>
+          <p>Book Flights, Make payments, and Manage your profile</p>
+          <a href="login_user.php" target=_blank class="btn btn-custom">User Login</a>
+          <p class="mt-2">Don't have an account? <a href="register_user.php" target=_blank>Register</a></p>
+        </div>
+      </div>
+
+      <!-- Guest -->
+      <div class="col-md-4">
+        <div class="card p-4 role-card">
+          <h4 class="mb-3">Guest</h4>
+          <p>Explore flight options without logging in</p>
+          <a href="guest.html" target=_blank class="btn btn-custom">Continue as Guest</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Discover Destinations Section -->
+  <div class="container-fluid destination-section">
+    <h3>🌟 Discover Our Top Travel Spots</h3>
+    <div class="row g-4"> <!-- Added 'g-4' for gap between cards -->
+      <!-- Paris -->
+      <div class="col-md-3 col-sm-6"> <!-- Adjusted for 4 cards in a row -->
+        <div class="card destination-card">
+          <img src="paris.avif" alt="Paris">
+          <div class="destination-overlay">
+            <h5>Paris, France 🇫🇷</h5>
+            <p>🕒 9h 30m | 💸 From $560</p>
+            <p class="info-small">🌤 Weather: 16°C, Cloudy<br>🕘 Local Time: <span id="time-paris"></span></p>
+            <a href="search_flights.php?to=paris" class="btn btn-sm btn-light flight-btn">View Flights</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Maldives -->
+      <div class="col-md-3 col-sm-6">
+        <div class="card destination-card">
+          <img src="maldiv.avif" alt="Maldives">
+          <div class="destination-overlay">
+            <h5>Maldives 🇲🇻</h5>
+            <p>🕒 5h 10m | 💸 From $550</p>
+            <p class="info-small">🌤 Weather: 28°C, Sunny<br>🕘 Local Time: <span id="time-maldives"></span></p>
+            <a href="search_flights.php?to=maldives" class="btn btn-sm btn-light flight-btn">View Flights</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Switzerland -->
+      <div class="col-md-3 col-sm-6">
+        <div class="card destination-card">
+          <img src="switzerland.avif" alt="Switzerland">
+          <div class="destination-overlay">
+            <h5>Switzerland 🇨🇭</h5>
+            <p>🕒 10h 50m | 💸 From $550</p>
+            <p class="info-small">🌤 Weather: 10°C, Cold<br>🕘 Local Time: <span id="time-switzerland"></span></p>
+            <a href="search_flights.php?to=switzerland" class="btn btn-sm btn-light flight-btn">View Flights</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tokyo -->
+      <div class="col-md-3 col-sm-6">
+        <div class="card destination-card">
+          <img src="japan.avif" alt="Tokyo">
+          <div class="destination-overlay">
+            <h5>Tokyo, Japan 🇯🇵</h5>
+            <p>🕒 6h 45m | 💸 From $620</p>
+            <p class="info-small">🌤 Weather: 21°C, Clear<br>🕘 Local Time: <span id="time-tokyo"></span></p>
+            <a href="search_flights.php?to=tokyo" class="btn btn-sm btn-light flight-btn">View Flights</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAQ / Questions Section -->
+  <div class="container faq-section">
+    <h3 class="text-center mb-4"><i class="fas fa-question-circle"></i> Frequently Asked Questions</h3>
+    <div class="accordion" id="faqAccordion">
+
+      <!-- Q1 -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="q1">
+          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#a1"
+            aria-expanded="true" aria-controls="a1">
+            <i class="fas fa-plane-departure"></i> How can I book a flight?
+          </button>
+        </h2>
+        <div id="a1" class="accordion-collapse collapse show" aria-labelledby="q1" data-bs-parent="#faqAccordion">
+          <div class="accordion-body">
+            Log in as a registered user, search your preferred flight, select it, and proceed to payment.
+          </div>
+        </div>
+      </div>
+
+      <!-- Q2 -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="q2">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#a2"
+            aria-expanded="false" aria-controls="a2">
+            <i class="fas fa-sync-alt"></i> Can I cancel or change my booking?
+          </button>
+        </h2>
+        <div id="a2" class="accordion-collapse collapse" aria-labelledby="q2" data-bs-parent="#faqAccordion">
+          <div class="accordion-body">
+            Yes! Go to “My Bookings” in your dashboard to cancel or update your flight. Cancellation charges may apply.
+          </div>
+        </div>
+      </div>
+
+      <!-- Q3 -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="q3">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#a3"
+            aria-expanded="false" aria-controls="a3">
+            <i class="fas fa-credit-card"></i> What payment methods are supported?
+          </button>
+        </h2>
+        <div id="a3" class="accordion-collapse collapse" aria-labelledby="q3" data-bs-parent="#faqAccordion">
+          <div class="accordion-body">
+            We accept Visa, MasterCard, PayPal, and direct bank transfers for most airlines.
+          </div>
+        </div>
+      </div>
+
+      <!-- Q4 -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="q4">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#a4"
+            aria-expanded="false" aria-controls="a4">
+            <i class="fas fa-file-download"></i> How do I download my ticket?
+          </button>
+        </h2>
+        <div id="a4" class="accordion-collapse collapse" aria-labelledby="q4" data-bs-parent="#faqAccordion">
+          <div class="accordion-body">
+            After payment, navigate to “My Bookings” and click the download icon to save your ticket as PDF.
+          </div>
+        </div>
+      </div>
+
+      <!-- Q5 -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="q5">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#a5"
+            aria-expanded="false" aria-controls="a5">
+            <i class="fas fa-user-lock"></i> Can I book without an account?
+          </button>
+        </h2>
+        <div id="a5" class="accordion-collapse collapse" aria-labelledby="q5" data-bs-parent="#faqAccordion">
+          <div class="accordion-body">
+            You must create an account to book flights. This ensures better security and booking history tracking.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <!-- ✅ CSS -->
+
+
+  <!-- ✅ HTML -->
+  <div>
+
+    <div class="gradient-bg py-5">
+      <div class="container my-5">
+
+        <!-- ✅ Your Heading -->
+        <h3 class="text-white text-center mb-4"> Travel Partner Promotions</h3>
+        <div class="gradient-bg py-5">
+          <div class="container my-5">
+            <div class="row g-4">
+              <!-- Hotel Booking -->
+              <div class="col-md-6" data-aos="fade-right" data-aos-duration="1200">
+                <h4 class="text-center text-white">🏩 Hotel Booking Deals</h4>
+                <div id="hotelCarousel" class="carousel slide" data-bs-ride="carousel">
+                  <div class="carousel-inner">
+                    <div class="carousel-item active">
+                      <img src="city hotel.avif" class="d-block w-100 rounded" alt="Hotel">
+                      <div class="carousel-caption bg-dark bg-opacity-50 rounded">
+                        <h5>Grand City Hotel</h5>
+                        <p>Save up to 30% on early bookings!</p>
+                      </div>
+                    </div>
+                    <div class="carousel-item">
+                      <img src="beach resort.avif" class="d-block w-100 rounded" alt="Resort">
+                      <div class="carousel-caption bg-dark bg-opacity-50 rounded">
+                        <h5>Beach Resort</h5>
+                        <p>All-inclusive packages starting from $299</p>
+                      </div>
+                    </div>
+                  </div>
+                  <button class="carousel-control-prev" type="button" data-bs-target="#hotelCarousel"
+                    data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon bg-dark rounded"></span>
+                  </button>
+                  <button class="carousel-control-next" type="button" data-bs-target="#hotelCarousel"
+                    data-bs-slide="next">
+                    <span class="carousel-control-next-icon bg-dark rounded"></span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Car Rental -->
+              <div class="col-md-6" data-aos="fade-left" data-aos-duration="1200">
+                <h4 class="text-center text-white">🚖 Car Rental Offers</h4>
+                <div id="carCarousel" class="carousel slide" data-bs-ride="carousel">
+                  <div class="carousel-inner">
+                    <div class="carousel-item active">
+                      <img src="renatal car.avif" class="d-block w-100 rounded" alt="Car Rental">
+                      <div class="carousel-caption bg-dark bg-opacity-50 rounded">
+                        <h5>City Drive Rentals</h5>
+                        <p>Get a sedan at just $19/day</p>
+                      </div>
+                    </div>
+                    <div class="carousel-item">
+                      <img src="car.avif" class="d-block w-100 rounded" alt="Luxury Car">
+                      <div class="carousel-caption bg-dark bg-opacity-50 rounded">
+                        <h5>Luxury Wheels</h5>
+                        <p>Comfort with premium cars</p>
+                      </div>
+                    </div>
+                  </div>
+                  <button class="carousel-control-prev" type="button" data-bs-target="#carCarousel"
+                    data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon bg-dark rounded"></span>
+                  </button>
+                  <button class="carousel-control-next" type="button" data-bs-target="#carCarousel"
+                    data-bs-slide="next">
+                    <span class="carousel-control-next-icon bg-dark rounded"></span>
+                  </button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="container support-section" data-aos="fade-up" data-aos-duration="1200">
+            <h3 class="text-center support-heading"><i class="fas fa-headset me-2"></i> Contact Support</h3>
+            <hr>
+            <div class="row">
+              <!-- Contact Info -->
+              <div class="col-md-5 mb-4">
+                <div class="support-card d-flex align-items-center" data-aos="fade-right" data-aos-delay="100">
+                  <i class="fas fa-phone-volume"></i>
+                  <div>
+                    <h6 class="mb-1">Customer Hotline</h6>
+                    <p class="mb-0">+1 (800) 555-5555</p>
+                  </div>
+                </div>
+                <div class="support-card d-flex align-items-center" data-aos="fade-right" data-aos-delay="200">
+                  <i class="fas fa-envelope"></i>
+                  <div>
+                    <h6 class="mb-1">Email Us</h6>
+                    <p class="mb-0">support@GoFly.com</p>
+                  </div>
+                </div>
+                <div class="support-card d-flex align-items-center" data-aos="fade-right" data-aos-delay="300">
+                  <i class="fas fa-clock"></i>
+                  <div>
+                    <h6 class="mb-1">Working Hours</h6>
+                    <p class="mb-0">Mon - Sat | 9:00 AM - 8:00 PM</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Contact Form -->
+              <div class="col-md-7" data-aos="fade-left" data-aos-delay="150">
+                <form>
+                  <div class="mb-3">
+                    <label for="name" class="form-label">Full Name</label>
+                    <input type="text" class="form-control" id="name" placeholder="Enter your full name">
+                  </div>
+                  <div class="mb-3">
+                    <label for="email" class="form-label">Email Address</label>
+                    <input type="email" class="form-control" id="email" placeholder="name@example.com">
+                  </div>
+                  <div class="mb-3">
+                    <label for="subject" class="form-label">Subject</label>
+                    <input type="text" class="form-control" id="subject" placeholder="Issue subject">
+                  </div>
+                  <div class="mb-3">
+                    <label for="message" class="form-label">Your Message</label>
+                    <textarea class="form-control" id="message" rows="4" placeholder="Write your concern..."></textarea>
+                  </div>
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+              </div>
+            </div>
+
+            <!-- Google Map Section -->
+            <div class="map-container mt-5" data-aos="zoom-in-up">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3648.9054035395994!2d90.4247!3d23.7784!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755c7f72d37c2ad%3A0x4010b3d9ef90d3c!2sEast%20West%20University!5e0!3m2!1sen!2sbd!4v1680000000000!5m2!1sen!2sbd"
+                width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade">
+              </iframe>
+            </div>
+          </div>
+
+          <!-- Chatbot Bubble -->
+          <div class="chatbot-bubble" title="Chat with Us">
+            <i class="fas fa-comment-alt"></i>
+          </div>
+        </div>
+        <style>
+          .footer {
+            width: 100%;
+            background: #0d1b2a;
+            color: #d6e4f0;
+            padding: 60px 0 20px;
+            font-size: 15px;
+          }
+
+          .footer a {
+            color: #d6e4f0;
+            text-decoration: none;
+            transition: color 0.3s ease;
+          }
+
+          .footer a:hover {
+            color: #63b3ed;
+          }
+
+          .footer h5 {
+            color: #ffffff;
+            margin-bottom: 20px;
+            font-weight: 600;
+          }
+
+          .footer .social-icons a {
+            font-size: 20px;
+            margin-right: 15px;
+            color: #d6e4f0;
+            transition: color 0.3s;
+          }
+
+          .footer .social-icons a:hover {
+            color: #63b3ed;
+          }
+
+          .subscribe-box input[type="email"] {
+            border: none;
+            padding: 10px;
+            width: 100%;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            outline: none;
+          }
+
+          .subscribe-box button {
+            background-color: #3b82f6;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 5px;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.3s;
+            width: 100%;
+          }
+
+          .subscribe-box button:hover {
+            background-color: #2563eb;
+          }
+
+          .footer-bottom {
+            border-top: 1px solid #1c2b3a;
+            margin-top: 40px;
+            padding-top: 15px;
+            text-align: center;
+            font-size: 14px;
+            color: #a0aec0;
+          }
+
+          @media (max-width: 768px) {
+            .footer {
+              text-align: center;
+            }
+
+            .footer .social-icons {
+              justify-content: center;
+            }
+          }
+        </style>
+      </div>
+      <footer class="footer">
+        <div class="container">
+          <div class="row">
+
+            <!-- Logo & About -->
+            <div class="col-md-4 mb-4">
+              <h5><i class="fas fa-plane-departure me-2"></i>AirTicket</h5>
+              <p>Your trusted partner for hassle-free air ticket bookings, best deals, and 24/7 support across the
+                globe.</p>
+              <div class="social-icons mt-3 d-flex">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+              </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="col-md-2 mb-4">
+              <h5>Quick Links</h5>
+              <ul class="list-unstyled">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Flights</a></li>
+                <li><a href="#">Destinations</a></li>
+                <li><a href="#">Offers</a></li>
+              </ul>
+            </div>
+
+            <!-- Support -->
+            <div class="col-md-3 mb-4">
+              <h5>Support</h5>
+              <ul class="list-unstyled">
+                <li><a href="#">Contact Us</a></li>
+                <li><a href="#">FAQs</a></li>
+                <li><a href="#">Terms & Conditions</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+              </ul>
+            </div>
+
+            <!-- Newsletter -->
+            <div class="col-md-3 mb-4">
+              <h5>Newsletter</h5>
+              <p>Get weekly updates, travel tips & exclusive offers.</p>
+              <div class="subscribe-box">
+                <input type="email" placeholder="Your email address">
+                <button>Subscribe</button>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Footer Bottom -->
+          <div class="footer-bottom mt-4">
+            © 2025 AirTicket. All rights reserved.
+          </div>
+        </div>
+
+      </footer>
+
+      <!-- Weather & Time Scripts -->
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+      <script>
+        function updateLocalTimes() {
+          const now = new Date();
+          const paris = now.toLocaleTimeString("en-GB", { timeZone: "Europe/Paris" });
+          const maldives = now.toLocaleTimeString("en-GB", { timeZone: "Indian/Maldives" });
+          const tokyo = now.toLocaleTimeString("en-GB", { timeZone: "Asia/Tokyo" });
+          const switzerland = now.toLocaleTimeString("en-GB", { timeZone: "Europe/Zurich" });
+
+          document.getElementById("time-paris").textContent = paris;
+          document.getElementById("time-maldives").textContent = maldives;
+          document.getElementById("time-tokyo").textContent = tokyo;
+          document.getElementById("time-switzerland").textContent = switzerland;
+        }
+
+        setInterval(updateLocalTimes, 1000);
+        updateLocalTimes();
+      </script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+      <!-- ✅ AOS JS -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+      <script>
+        AOS.init();
+      </script>
+</body>
+
+</html>
