@@ -1,0 +1,110 @@
+-- Create the Database
+CREATE DATABASE IF NOT EXISTS `project`;
+USE `project`;
+
+-- Table for storing Airlines
+CREATE TABLE `airlines` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `name` VARCHAR(100) NOT NULL,
+  `code` VARCHAR(10),
+  `country` VARCHAR(50)
+);
+
+-- Table for storing Users (Registered Users)
+CREATE TABLE `users` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `name` VARCHAR(100) NOT NULL,
+  `username` VARCHAR(50) UNIQUE,
+  `email` VARCHAR(100) UNIQUE NOT NULL,
+  `password` VARCHAR(255) NOT NULL,
+  `phone` VARCHAR(20),
+  `role` ENUM('Passenger', 'Admin') DEFAULT 'Passenger',
+  `status` ENUM('Active', 'Inactive') DEFAULT 'Active',
+  `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Table for storing Admins (Separate from users for your admin login)
+CREATE TABLE `admins` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `username` VARCHAR(50) UNIQUE NOT NULL,
+  `password` VARCHAR(255) NOT NULL
+);
+
+-- Table for storing Flights (Uses 'origin' and 'destination' as text, not IDs, based on your PHP)
+CREATE TABLE `flights` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `airline_id` INT NOT NULL,
+  `flight_no` VARCHAR(10) NOT NULL,
+  `origin` VARCHAR(50) NOT NULL, -- e.g., 'Dhaka'
+  `destination` VARCHAR(50) NOT NULL, -- e.g., 'Chittagong'
+  `departure_time` DATETIME NOT NULL,
+  `arrival_time` DATETIME NOT NULL,
+  FOREIGN KEY (`airline_id`) REFERENCES `airlines`(`id`)
+);
+
+-- Table for storing Bookings
+CREATE TABLE `bookings` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `flight_id` INT NOT NULL,
+  `passenger_name` VARCHAR(100) NOT NULL,
+  `passenger_email` VARCHAR(100) NOT NULL,
+  `seat_no` VARCHAR(5),
+  `status` ENUM('Confirmed', 'Pending', 'Cancelled', 'Paid') DEFAULT 'Confirmed',
+  `booking_date` DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (`flight_id`) REFERENCES `flights`(`id`)
+);
+
+-- Table for storing Promotions/Discounts
+CREATE TABLE `promotions` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `promo_name` VARCHAR(100) NOT NULL,
+  `promo_code` VARCHAR(20) UNIQUE NOT NULL,
+  `discount_percent` DECIMAL(5,2) NOT NULL, -- e.g., 15.00
+  `status` ENUM('Active', 'Inactive') DEFAULT 'Active'
+);
+
+-- Table for storing Complaints/Feedback
+CREATE TABLE `complaints_feedback` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `user_id` INT,
+  `message` TEXT NOT NULL,
+  `response` TEXT,
+  `status` ENUM('Pending', 'Responded') DEFAULT 'Pending',
+  `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (`user_id`) REFERENCES `users`(`id`)
+);
+
+-- Table for storing Locations (for your manage_location.php)
+CREATE TABLE `locations` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `city` VARCHAR(50) NOT NULL,
+  `country` VARCHAR(50) NOT NULL,
+  `airport_code` VARCHAR(10) NOT NULL
+);
+
+-- Insert Sample Admin User for login (username: admin, password: admin)
+-- You MUST change this password after installation!
+INSERT INTO `admins` (`username`, `password`) VALUES
+('amanna@gmail.com', '4224');
+INSERT INTO `admins` (`username`, `password`) VALUES
+('sadia@gmail.com', '1234');
+
+-- Insert Sample Airlines
+INSERT INTO `airlines` (`name`, `code`, `country`) VALUES
+('Biman Bangladesh Airlines', 'BG', 'Bangladesh'),
+('US-Bangla Airlines', 'BS', 'Bangladesh'),
+('Emirates', 'EK', 'UAE'),
+('Qatar Airways', 'QR', 'Qatar'),
+('Singapore Airlines', 'SQ', 'Singapore');
+
+-- Insert Sample Flights
+INSERT INTO `flights` (`airline_id`, `flight_no`, `origin`, `destination`, `departure_time`, `arrival_time`) VALUES
+(1, 'BG101', 'Dhaka', 'Chittagong', '2025-08-23 08:00:00', '2025-08-23 09:15:00'),
+(1, 'BG201', 'Dhaka', 'Cox''s Bazar', '2025-08-24 10:00:00', '2025-08-24 11:00:00'),
+(2, 'BS202', 'Dhaka', 'Kolkata', '2025-08-25 14:30:00', '2025-08-25 16:00:00'),
+(3, 'EK505', 'Dhaka', 'Dubai', '2025-08-24 22:45:00', '2025-08-25 04:30:00');
+
+-- Insert Sample Promotion
+INSERT INTO `promotions` (`promo_name`, `promo_code`, `discount_percent`, `status`) VALUES
+('Summer Sale', 'SUMMER25', 15.00, 'Active'),
+('Winter Discount', 'WINTER20', 20.00, 'Active');
